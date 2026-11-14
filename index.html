@@ -245,8 +245,9 @@ if(sb){
   sb.auth.onAuthStateChange((_e,sess)=>setAuth(sess));
   sb.auth.getSession().then(({data})=>setAuth(data.session));
   const creds=()=>({email:$("#em").value.trim(),password:$("#pw").value});
-  $("#signin").onclick=async()=>{const {error}=await sb.auth.signInWithPassword(creds());$("#amsg").textContent=error?error.message:""};
-  $("#signup").onclick=async()=>{const {data,error}=await sb.auth.signUp(creds());$("#amsg").textContent=error?error.message:(data.session?"":"Check your email to confirm your account, then sign in.")};
+  const ok=c=>{if(!c.email||c.password.length<6){$("#amsg").textContent="Enter your email and a password of at least 6 characters.";return false}return true};
+  $("#signin").onclick=async()=>{const c=creds();if(!ok(c))return;const {error}=await sb.auth.signInWithPassword(c);$("#amsg").textContent=error?error.message:""};
+  $("#signup").onclick=async()=>{const c=creds();if(!ok(c))return;const {data,error}=await sb.auth.signUp(c);$("#amsg").textContent=error?error.message:(data.session?"":"Check your email to confirm your account, then sign in.")};
   $("#signout").onclick=()=>sb.auth.signOut();
 }
 </script>
