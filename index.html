@@ -1,0 +1,254 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Daily Thought Record</title>
+<link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#eef2f4;--surface:#fff;--ink:#1d2b33;--muted:#5b6b75;--line:#d3dde2;--accent:#1f6f78;--accent-ink:#fff;--soft:#dcebed;--warn:#b4572f;
+box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#121a1f;--surface:#1b262d;--ink:#e6eef2;--muted:#9fb0ba;--line:#2f404a;--accent:#5fb7c1;--accent-ink:#0d1a1e;--soft:#203a40;--warn:#e08a62}}
+:root[data-theme="dark"]{--bg:#121a1f;--surface:#1b262d;--ink:#e6eef2;--muted:#9fb0ba;--line:#2f404a;--accent:#5fb7c1;--accent-ink:#0d1a1e;--soft:#203a40;--warn:#e08a62}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*,*::before,*::after{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font:16px/1.55 Figtree,system-ui,sans-serif}
+main{max-width:760px;margin:0 auto;padding:24px 16px 64px}
+h1,h2,h3{font-family:Literata,Georgia,serif;line-height:1.2;margin:0}
+h1{font-size:2rem}
+h2{font-size:1.3rem;margin-bottom:4px}
+.lead{color:var(--muted);margin:6px 0 20px;max-width:60ch}
+nav{display:flex;gap:6px;margin-bottom:20px;border-bottom:1px solid var(--line)}
+nav button{background:none;border:0;border-bottom:3px solid transparent;padding:10px 14px;font:inherit;font-weight:600;color:var(--muted);cursor:pointer}
+nav button[aria-selected="true"]{color:var(--accent);border-color:var(--accent)}
+section.card{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:20px;margin-bottom:16px}
+.hint{color:var(--muted);font-size:.92rem;margin:0 0 14px}
+label{display:block;font-weight:600;margin:12px 0 4px}
+textarea,input[type=text],input[type=password]{width:100%;font:inherit;color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:10px}
+textarea{min-height:74px;resize:vertical}
+:focus-visible{outline:3px solid var(--accent);outline-offset:2px}
+.scale{display:flex;align-items:center;gap:12px}
+.scale input{flex:1;accent-color:var(--accent)}
+.val{min-width:2.4ch;text-align:center;font-family:Literata,serif;font-weight:700;font-size:1.3rem;color:var(--accent)}
+.ends{display:flex;justify-content:space-between;color:var(--muted);font-size:.8rem}
+.at{border:1px solid var(--line);border-radius:8px;padding:16px;margin-top:14px;background:var(--bg)}
+.at-head{display:flex;justify-content:space-between;align-items:center}
+.chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px}
+.chip{border:1px solid var(--line);background:var(--surface);color:var(--ink);border-radius:999px;padding:5px 11px;font:inherit;font-size:.86rem;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--accent);color:var(--accent-ink);border-color:var(--accent)}
+.chip[aria-pressed="true"]::before{content:"✓ "}
+.btn{font:inherit;font-weight:600;border-radius:8px;padding:11px 18px;cursor:pointer;border:1px solid var(--accent);background:var(--accent);color:var(--accent-ink)}
+.btn.ghost{background:none;color:var(--accent)}
+.btn.small{padding:5px 10px;font-size:.85rem}
+.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px}
+.drop{display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.drop .big{font-family:Literata,serif;font-size:2.4rem;font-weight:700;line-height:1}
+.pill{padding:3px 10px;border-radius:999px;font-size:.85rem;font-weight:600;background:var(--soft);color:var(--accent)}
+.pill.up{background:none;border:1px solid var(--warn);color:var(--warn)}
+.dots{display:flex;flex-wrap:wrap;gap:6px;margin:10px 0 4px}
+.dots span{width:26px;height:26px;border-radius:50%;border:2px solid var(--line);display:grid;place-items:center;font-size:.72rem;color:var(--muted)}
+.dots span.on{background:var(--accent);border-color:var(--accent);color:var(--accent-ink)}
+.rec{border-top:1px solid var(--line);padding:16px 0}
+.rec:first-of-type{border-top:0}
+.rec h3{font-size:1.05rem}
+.meta{color:var(--muted);font-size:.85rem}
+.rec dl{margin:10px 0 0;display:grid;grid-template-columns:auto 1fr;gap:4px 12px;font-size:.93rem}
+.rec dt{color:var(--muted)}
+.rec dd{margin:0}
+.rec .atl{margin-top:10px;padding-left:12px;border-left:3px solid var(--soft)}
+.empty{color:var(--muted);text-align:center;padding:24px 0}
+[hidden]{display:none!important}
+.toast{position:fixed;left:50%;bottom:calc(20px + env(safe-area-inset-bottom,0px));transform:translateX(-50%);background:var(--ink);color:var(--bg);padding:10px 18px;border-radius:8px;font-weight:600}
+</style>
+</head>
+<body>
+<main>
+<h1>Daily Thought Record</h1>
+<p class="lead">Write down one upsetting event, test the thoughts it set off, and see how your feelings change. It takes about fifteen minutes.</p>
+<div class="meta" id="who" hidden>Signed in as <span id="email-shown"></span> · <button class="btn ghost small" id="signout">Sign out</button></div>
+<section class="card" id="auth" hidden>
+<h2>Sign in</h2>
+<p class="hint">Your records sync through your own Supabase project. Create an account once, then sign in on each device.</p>
+<label for="em">Email</label><input type="text" id="em" autocomplete="email" inputmode="email">
+<label for="pw">Password</label><input type="password" id="pw" autocomplete="current-password">
+<div class="row"><button class="btn" id="signin">Sign in</button><button class="btn ghost" id="signup">Create account</button></div>
+<p class="meta" id="amsg" role="status"></p>
+</section>
+<div id="app">
+<nav role="tablist">
+  <button role="tab" id="t-new" aria-selected="true">New record</button>
+  <button role="tab" id="t-hist" aria-selected="false">My records</button>
+</nav>
+
+<div id="v-new">
+  <section class="card">
+    <h2>The facts</h2>
+    <p class="hint">Briefly describe an upsetting event and how you felt (sad, anxious, guilty, frustrated).</p>
+    <label for="event">What happened?</label>
+    <textarea id="event"></textarea>
+    <label for="feel">What did you feel?</label>
+    <input type="text" id="feel" placeholder="e.g. anxious, guilty">
+    <label for="int1">How intense is the feeling?</label>
+    <div class="scale"><input type="range" id="int1" min="1" max="10" value="5"><span class="val" id="int1v">5</span></div>
+    <div class="ends"><span>1 not unpleasant</span><span>10 extremely unpleasant</span></div>
+  </section>
+
+  <section class="card">
+    <h2>Analysis of your thoughts</h2>
+    <p class="hint">For each automatic thought (AT): rate how much you believe it, pick any distortions, then talk back to it. Imagine what you would say to a friend who said the same thing. Ask yourself, “What is the evidence for the reasonable response?”</p>
+    <div id="ats"></div>
+    <div class="row"><button class="btn ghost" id="addAt">Add another thought</button></div>
+  </section>
+
+  <section class="card">
+    <h2>Results</h2>
+    <p class="hint">Go back to each thought and re-rate how much you believe it, then re-rate the intensity of your feeling. Even a slight drop is a win.</p>
+    <div id="rerate"></div>
+    <label for="int2">Feeling intensity now</label>
+    <div class="scale"><input type="range" id="int2" min="1" max="10" value="5"><span class="val" id="int2v">5</span></div>
+    <div class="row"><button class="btn" id="save">Save record</button><button class="btn ghost" id="clear">Start over</button></div>
+  </section>
+</div>
+
+<div id="v-hist" hidden>
+  <section class="card">
+    <h2>Your two weeks</h2>
+    <p class="hint" id="trackText"></p>
+    <div class="dots" id="dots"></div>
+  </section>
+  <section class="card" id="list"></section>
+</div>
+</div></main>
+<div class="toast" id="toast" hidden></div>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.45.4/dist/umd/supabase.min.js"></script>
+<script>
+const FALLACIES=[
+["All-or-nothing","Seeing things as only good or bad, perfect or failure."],
+["Overgeneralizing","Treating one event as a never-ending pattern."],
+["Mental filter","Dwelling on one negative detail and ignoring the rest."],
+["Discounting positives","Insisting good things do not count."],
+["Mind reading","Assuming you know what others think of you."],
+["Fortune telling","Predicting things will turn out badly."],
+["Catastrophizing","Blowing things up, or shrinking your strengths."],
+["Emotional reasoning","Feeling it, so it must be true."],
+["Should statements","Rigid rules about how you or others must act."],
+["Labeling","Calling yourself a name instead of describing what happened."],
+["Personalizing","Blaming yourself for things outside your control."]
+];
+const KEY="dtr:records";
+const $=s=>document.querySelector(s);
+const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
+// ---- Supabase setup: paste your project URL and anon (public) key ----
+const SUPABASE_URL=https://lqkjpcqzpkcstnougyvq.supabase.co;
+const SUPABASE_ANON_KEY=sb_publishable_dqUrV9fz9a2fKX31RdbJ5w_LJm8HB8n;
+const sb=(window.supabase&&!SUPABASE_URL.startsWith("PASTE"))?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
+let cache=[];
+function localGet(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return cache}}
+function localSet(a){cache=a;try{localStorage.setItem(KEY,JSON.stringify(a))}catch(e){}}
+async function load(){
+  if(!sb)return localGet();
+  const {data,error}=await sb.from("thought_records").select("id,data").order("created_at",{ascending:false});
+  if(error){toast("Could not load records");return cache}
+  cache=data.map(r=>({...r.data,id:r.id}));return cache;
+}
+async function addRecord(rec){
+  if(!sb){const a=localGet();a.unshift(rec);localSet(a);return true}
+  const {error}=await sb.from("thought_records").insert({data:rec});return !error;
+}
+async function delRecord(id){
+  if(!sb){localSet(localGet().filter(r=>r.id!=id));return}
+  await sb.from("thought_records").delete().eq("id",id);
+}
+function toast(t){const e=$("#toast");e.textContent=t;e.hidden=false;setTimeout(()=>e.hidden=true,2200)}
+
+let ats=[];
+function bindRange(id){const i=$("#"+id),v=$("#"+id+"v");i.oninput=()=>v.textContent=i.value}
+bindRange("int1");bindRange("int2");
+
+function addAt(){
+  const n=ats.length;
+  const d=document.createElement("div");d.className="at";
+  d.innerHTML=`<div class="at-head"><h3>Thought ${n+1}</h3><button class="btn ghost small rm" ${n===0?"hidden":""}>Remove</button></div>
+  <label>Automatic thought</label><textarea class="at-text" placeholder="What went through your mind?"></textarea>
+  <label>How much do you believe it?</label>
+  <div class="scale"><input type="range" class="b1" min="1" max="10" value="7"><span class="val">7</span></div>
+  <div class="ends"><span>1 not believable</span><span>10 completely believable</span></div>
+  <label>Thought fallacies <span class="meta">(some thoughts may be rational. Select none if so.)</span></label>
+  <div class="chips">${FALLACIES.map(f=>`<button type="button" class="chip" aria-pressed="false" title="${esc(f[1])}">${f[0]}</button>`).join("")}</div>
+  <label>Reasonable response</label>
+  <textarea class="resp" placeholder="Talk back to the thought. What is the evidence?"></textarea>
+  <label>How much do you believe the response?</label>
+  <div class="scale"><input type="range" class="b2" min="1" max="10" value="5"><span class="val">5</span></div>`;
+  d.querySelectorAll(".scale").forEach(s=>{const i=s.querySelector("input"),v=s.querySelector(".val");i.oninput=()=>v.textContent=i.value});
+  d.querySelectorAll(".chip").forEach(c=>c.onclick=()=>c.setAttribute("aria-pressed",c.getAttribute("aria-pressed")!=="true"));
+  d.querySelector(".rm").onclick=()=>{ats=ats.filter(a=>a!==entry);d.remove();entry.r.remove();renumber()};
+  const r=document.createElement("div");r.className="at";
+  r.innerHTML=`<label class="rl"></label><div class="scale"><input type="range" class="b3" min="1" max="10" value="5"><span class="val">5</span></div>`;
+  const ri=r.querySelector("input"),rv=r.querySelector(".val");ri.oninput=()=>rv.textContent=ri.value;
+  const entry={d,r};ats.push(entry);
+  $("#ats").appendChild(d);$("#rerate").appendChild(r);renumber();
+}
+function renumber(){ats.forEach((a,i)=>{a.d.querySelector("h3").textContent="Thought "+(i+1);a.d.querySelector(".rm").hidden=ats.length===1;
+  const t=a.d.querySelector(".at-text").value.trim();a.r.querySelector(".rl").textContent="Belief now in thought "+(i+1)+(t?": “"+(t.length>60?t.slice(0,60)+"…":t)+"”":"")});}
+document.addEventListener("input",e=>{if(e.target.classList.contains("at-text"))renumber()});
+$("#addAt").onclick=()=>{addAt();ats[ats.length-1].d.querySelector("textarea").focus()};
+
+function reset(){ats=[];$("#ats").innerHTML="";$("#rerate").innerHTML="";$("#event").value="";$("#feel").value="";
+  ["int1","int2"].forEach(i=>{$("#"+i).value=5;$("#"+i+"v").textContent=5});addAt()}
+$("#clear").onclick=()=>{if(confirm("Clear this record without saving?"))reset()};
+
+$("#save").onclick=async()=>{
+  const event=$("#event").value.trim();
+  const items=ats.map(a=>({at:a.d.querySelector(".at-text").value.trim(),b1:+a.d.querySelector(".b1").value,
+    f:[...a.d.querySelectorAll(".chip[aria-pressed=true]")].map(c=>c.textContent),
+    resp:a.d.querySelector(".resp").value.trim(),b2:+a.d.querySelector(".b2").value,b3:+a.r.querySelector(".b3").value})).filter(x=>x.at);
+  if(!event||!items.length){toast("Add the event and at least one thought");return}
+  const rec={id:Date.now(),date:new Date().toISOString(),event,feel:$("#feel").value.trim(),i1:+$("#int1").value,i2:+$("#int2").value,items};
+  if(!await addRecord(rec)){toast("Could not save. Check your connection.");return}
+  const d=rec.i1-rec.i2;
+  toast(d>0?"Saved. Your feeling dropped by "+d+".":d===0?"Saved. Well done for sticking with it.":"Saved. Some days it rises first. Keep going.");
+  reset();show("hist");
+};
+
+function dayKey(iso){const d=new Date(iso);return d.getFullYear()+"-"+(d.getMonth()+1)+"-"+d.getDate()}
+async function renderHist(){
+  const all=await load();
+  const list=$("#list");
+  if(!all.length){list.innerHTML='<div class="empty">No records yet. Start with one upsetting event today.</div>';$("#dots").innerHTML="";$("#trackText").textContent="Do one record each day for two weeks, then move on to the next section of your program.";return}
+  const first=new Date(all[all.length-1].date);first.setHours(0,0,0,0);
+  const days=new Set(all.map(r=>dayKey(r.date)));let done=0,html="";
+  for(let i=0;i<14;i++){const d=new Date(first);d.setDate(first.getDate()+i);const on=days.has(dayKey(d.toISOString()));if(on)done++;html+=`<span class="${on?"on":""}" title="${d.toDateString()}">${i+1}</span>`}
+  $("#dots").innerHTML=html;
+  $("#trackText").textContent=done+" of 14 days completed since "+first.toLocaleDateString()+". "+(done>=14?"You have finished the two weeks.":"Be patient with yourself. It usually takes a few weeks to build this skill.");
+  list.innerHTML=all.map(r=>{const d=r.i1-r.i2;
+    return `<div class="rec"><div class="drop"><div class="big">${r.i1} → ${r.i2}</div>
+    <span class="pill ${d<0?"up":""}">${d>0?"Down "+d:d===0?"No change":"Up "+(-d)}</span></div>
+    <h3 style="margin-top:10px">${esc(r.event)}</h3>
+    <div class="meta">${new Date(r.date).toLocaleString([], {dateStyle:"medium",timeStyle:"short"})}${r.feel?" · Felt "+esc(r.feel):""}</div>
+    ${r.items.map(x=>`<div class="atl"><dl><dt>Thought</dt><dd>${esc(x.at)} (${x.b1} → ${x.b3})</dd>
+    <dt>Fallacies</dt><dd>${x.f.length?esc(x.f.join(", ")):"None marked"}</dd>
+    <dt>Response</dt><dd>${x.resp?esc(x.resp)+" (belief "+x.b2+")":"—"}</dd></dl></div>`).join("")}
+    <div class="row"><button class="btn ghost small" data-del="${r.id}">Delete</button></div></div>`}).join("");
+  list.querySelectorAll("[data-del]").forEach(b=>b.onclick=async()=>{if(confirm("Delete this record?")){await delRecord(b.dataset.del);renderHist()}});
+}
+function show(v){
+  $("#v-new").hidden=v!=="new";$("#v-hist").hidden=v!=="hist";
+  $("#t-new").setAttribute("aria-selected",v==="new");$("#t-hist").setAttribute("aria-selected",v==="hist");
+  if(v==="hist")renderHist();window.scrollTo(0,0);
+}
+$("#t-new").onclick=()=>show("new");$("#t-hist").onclick=()=>show("hist");
+function setAuth(sess){$("#auth").hidden=!!sess;$("#app").hidden=!sess;$("#who").hidden=!sess;if(sess)$("#email-shown").textContent=sess.user.email}
+reset();
+if(sb){
+  $("#app").hidden=true;
+  sb.auth.onAuthStateChange((_e,sess)=>setAuth(sess));
+  sb.auth.getSession().then(({data})=>setAuth(data.session));
+  const creds=()=>({email:$("#em").value.trim(),password:$("#pw").value});
+  $("#signin").onclick=async()=>{const {error}=await sb.auth.signInWithPassword(creds());$("#amsg").textContent=error?error.message:""};
+  $("#signup").onclick=async()=>{const {data,error}=await sb.auth.signUp(creds());$("#amsg").textContent=error?error.message:(data.session?"":"Check your email to confirm your account, then sign in.")};
+  $("#signout").onclick=()=>sb.auth.signOut();
+}
+</script>
+</body>
+</html>
