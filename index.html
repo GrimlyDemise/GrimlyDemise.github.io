@@ -4,6 +4,10 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Daily Thought Record</title>
+<link rel="manifest" href="manifest.webmanifest">
+<meta name="theme-color" content="#1f6f78">
+<link rel="icon" href="icon-192.png">
+<link rel="apple-touch-icon" href="icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Literata:opsz,wght@7..72,500;7..72,700&family=Figtree:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{--bg:#eef2f4;--surface:#fff;--ink:#1d2b33;--muted:#5b6b75;--line:#d3dde2;--accent:#1f6f78;--accent-ink:#fff;--soft:#dcebed;--warn:#b4572f;
@@ -65,7 +69,7 @@ textarea{min-height:74px;resize:vertical}
 <main>
 <h1>Daily Thought Record</h1>
 <p class="lead">Write down one upsetting event, test the thoughts it set off, and see how your feelings change. It takes about fifteen minutes.</p>
-<div class="meta" id="who" hidden>Signed in as <span id="email-shown"></span> · <button class="btn ghost small" id="signout">Sign out</button></div>
+<div class="meta" id="who" hidden style="display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin-bottom:12px">Signed in as <span id="email-shown"></span> <button class="btn ghost small" id="signout">Sign out</button> <button class="btn small" id="remind" hidden>Enable reminders</button></div>
 <section class="card" id="auth" hidden>
 <h2>Sign in</h2>
 <p class="hint">Your records sync through your own Supabase project. Create an account once, then sign in on each device.</p>
@@ -142,6 +146,7 @@ const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;"
 // ---- Supabase setup: paste your project URL and anon (public) key ----
 const SUPABASE_URL="https://lqkjpcqzpkcstnougyvq.supabase.co";
 const SUPABASE_ANON_KEY="sb_publishable_dqUrV9fz9a2fKX31RdbJ5w_LJm8HB8n";
+const VAPID_PUBLIC_KEY="BL_pKPg-6uaCXjVZHgy8DKlwieqcT22DZQLitmyHm0cO_CDrjKtmzsP-b27vh4X7qhO8tHIsAuPRceX0fViS8S8";
 const sb=(window.supabase&&!SUPABASE_URL.startsWith("PASTE"))?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 let cache=[];
 function localGet(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return cache}}
@@ -249,6 +254,28 @@ if(sb){
   $("#signin").onclick=async()=>{const c=creds();if(!ok(c))return;const {error}=await sb.auth.signInWithPassword(c);$("#amsg").textContent=error?error.message:""};
   $("#signup").onclick=async()=>{const c=creds();if(!ok(c))return;const {data,error}=await sb.auth.signUp(c);$("#amsg").textContent=error?error.message:(data.session?"":"Check your email to confirm your account, then sign in.")};
   $("#signout").onclick=()=>sb.auth.signOut();
+  const canPush="serviceWorker" in navigator&&"PushManager" in window&&"Notification" in window&&!VAPID_PUBLIC_KEY.startsWith("PASTE");
+  if(canPush){
+    const rb=$("#remind");rb.hidden=false;
+    navigator.serviceWorker.register("sw.js").catch(()=>{});
+    const key=k=>{const s=(k+"=".repeat((4-k.length%4)%4)).replace(/-/g,"+").replace(/_/g,"/");return Uint8Array.from(atob(s),c=>c.charCodeAt(0))};
+    const refresh=async()=>{const reg=await navigator.serviceWorker.ready;const sub=await reg.pushManager.getSubscription();rb.textContent=sub?"Turn off reminders":"Enable reminders";return {reg,sub}};
+    refresh();
+    rb.onclick=async()=>{
+      try{
+        const {reg,sub}=await refresh();
+        if(sub){await sb.from("push_subscriptions").delete().eq("endpoint",sub.endpoint);await sub.unsubscribe();toast("Reminders off")}
+        else{
+          if(await Notification.requestPermission()!=="granted"){toast("Notifications are blocked for this site");return}
+          const s=await reg.pushManager.subscribe({userVisibleOnly:true,applicationServerKey:key(VAPID_PUBLIC_KEY)});
+          const {error}=await sb.from("push_subscriptions").upsert({endpoint:s.endpoint,subscription:s.toJSON()});
+          if(error){await s.unsubscribe();toast("Could not save reminder settings");return}
+          toast("Reminders on");
+        }
+        refresh();
+      }catch(e){toast("Could not change reminders")}
+    };
+  }
 }
 </script>
 </body>
