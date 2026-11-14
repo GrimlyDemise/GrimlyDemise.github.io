@@ -140,8 +140,8 @@ const KEY="dtr:records";
 const $=s=>document.querySelector(s);
 const esc=s=>String(s).replace(/[&<>"']/g,c=>({"&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#39;"}[c]));
 // ---- Supabase setup: paste your project URL and anon (public) key ----
-const SUPABASE_URL=https://lqkjpcqzpkcstnougyvq.supabase.co;
-const SUPABASE_ANON_KEY=sb_publishable_dqUrV9fz9a2fKX31RdbJ5w_LJm8HB8n;
+const SUPABASE_URL="https://lqkjpcqzpkcstnougyvq.supabase.co";
+const SUPABASE_ANON_KEY="sb_publishable_dqUrV9fz9a2fKX31RdbJ5w_LJm8HB8n";
 const sb=(window.supabase&&!SUPABASE_URL.startsWith("PASTE"))?window.supabase.createClient(SUPABASE_URL,SUPABASE_ANON_KEY):null;
 let cache=[];
 function localGet(){try{return JSON.parse(localStorage.getItem(KEY)||"[]")}catch(e){return cache}}
